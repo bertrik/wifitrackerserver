@@ -1,0 +1,32 @@
+
+// Here we configure the base version number.
+// The version number will automatically be appended with the revision number when building on a CI server
+// when building locally the version number will be appended with -SNAPSHOT to indicate that it is a non approved version.
+version = '0.1'
+
+// All our projects have the same group id, this is used when publishing the archives
+// NOTE: projects are listed in settings.gradle
+allprojects { group = 'nl.sikken.bertrik' }
+
+// Define all library dependencies in one file for clarity
+apply from:'dependencies.gradle'
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "eclipse"
+    
+    targetCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    repositories {
+        mavenCentral()
+    }
+
+    // Standard libraries added to all projects
+    dependencies {
+        testCompile libraries.junit
+
+        compile libraries.slf4j
+    }
+
+}
