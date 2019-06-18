@@ -17,4 +17,8 @@ public final class GlsRequest {
 		wifiAccessPoints.add(ap);
 	}
 	
+	public String getConsiderIp() {
+		return considerIp;
+	}
+
 }

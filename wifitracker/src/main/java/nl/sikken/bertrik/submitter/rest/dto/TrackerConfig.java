@@ -11,4 +11,8 @@ public final class TrackerConfig {
 		// jackson constructor
 	}
 
+	public String getDummy() {
+		return dummy;
+	}
+	
 }

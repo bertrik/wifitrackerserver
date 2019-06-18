@@ -19,4 +19,12 @@ public final class TrackerWifiRecord {
 		this.rssi = rssi;
 	}
 
+	public String getMac() {
+		return mac;
+	}
+	
+	public int getRssi() {
+		return rssi;
+	}
+	
 }
