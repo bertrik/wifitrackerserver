@@ -1,3 +1,6 @@
+plugins {
+  id  'com.github.spotbugs' version '2.0.0'
+}
 
 // Here we configure the base version number.
 // The version number will automatically be appended with the revision number when building on a CI server
@@ -14,12 +17,23 @@ apply from:'dependencies.gradle'
 subprojects {
     apply plugin: "java"
     apply plugin: "eclipse"
+    apply plugin: "pmd"
+    apply plugin: "com.github.spotbugs"
     
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
+    }
+
+    pmd {
+        toolVersion = "5.8.1"
+    }
+
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
+        reports.xml.enabled = false
+        reports.html.enabled = true
     }
 
     // Standard libraries added to all projects
