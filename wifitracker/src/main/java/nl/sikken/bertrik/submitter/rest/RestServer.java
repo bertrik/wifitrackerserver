@@ -9,23 +9,23 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public final class RestServer {
 	
 	public static void main(String[] args) throws Exception {
-		final RestServer restServer = new RestServer();
+		RestServer restServer = new RestServer();
 		restServer.start();
 	}
 
 	private void start() throws Exception {
-		final Server server = createRestServer(3000, "", RestApiImpl.class);
+		Server server = createRestServer(3000, "", RestApiImpl.class);
 		server.start();
 	}
 	
     private Server createRestServer(int port, String contextPath, Class<?> clazz) throws Exception {
-        final Server server = new Server(port);
+        Server server = new Server(port);
 
         // setup context
-        final ServletContextHandler context = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
+        ServletContextHandler context = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
         
         // setup web services container
-        final ServletHolder sh = new ServletHolder(ServletContainer.class);
+        ServletHolder sh = new ServletHolder(ServletContainer.class);
         sh.setInitParameter(ServerProperties.PROVIDER_CLASSNAMES, clazz.getCanonicalName());
         context.addServlet(sh, contextPath + "/*");
         server.setHandler(context);

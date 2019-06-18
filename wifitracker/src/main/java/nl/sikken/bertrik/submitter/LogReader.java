@@ -20,14 +20,14 @@ public final class LogReader {
 	
 	public List<LogRecord> read(File file) throws IOException {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
-			final List<LogRecord> list = new ArrayList<LogRecord>();
+			List<LogRecord> list = new ArrayList<LogRecord>();
 			
 			while (true) {
-				final String line = reader.readLine();
+				String line = reader.readLine();
 				if (line == null) {
 					break;
 				}
-				final LogRecord record = decodeLine(line);
+				LogRecord record = decodeLine(line);
 				if (record == null) {
 					break;
 				}
@@ -38,8 +38,8 @@ public final class LogReader {
 	}
 
 	private LogRecord decodeLine(String line) throws IOException {
-		final ObjectMapper mapper = new ObjectMapper();
-		final LogRecord record = mapper.readValue(line, LogRecord.class);
+		ObjectMapper mapper = new ObjectMapper();
+		LogRecord record = mapper.readValue(line, LogRecord.class);
 		return record;
 	}
 	

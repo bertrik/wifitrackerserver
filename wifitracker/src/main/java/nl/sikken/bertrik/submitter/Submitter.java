@@ -35,43 +35,43 @@ public final class Submitter {
 	public static void main(String[] args) throws Exception {
 		LOG.info("Starting!");
 
-		final Submitter submitter = new Submitter();
-		final String apiKey = "<your google API key here>";
-		final URI url = new URI("https://www.googleapis.com/geolocation/v1/geolocate?key=" + apiKey);
+		Submitter submitter = new Submitter();
+		String apiKey = "<your google API key here>";
+		URI url = new URI("https://www.googleapis.com/geolocation/v1/geolocate?key=" + apiKey);
 //		final URI url = new URI("https://location.services.mozilla.com/v1/geolocate?key=test");
-		final File csv = new File("20160423.csv");
+		File csv = new File("20160423.csv");
 		submitter.run(new File("data/20160423/20160423.log"), url, csv);
 	}
 
 	private void run(File file, URI url, File csvFile) throws IOException, InterruptedException {
-		final ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
 
 		// read file
-		final LogReader reader = new LogReader();
+		LogReader reader = new LogReader();
 		List<LogRecord> records = reader.read(file);
 
 		// convert and submit
-		final OutputStream os = new FileOutputStream(csvFile);
-		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+		OutputStream os = new FileOutputStream(csvFile);
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 		for (LogRecord record : records) {
 			// create request
-			final GlsRequest request = new GlsRequest();
+			GlsRequest request = new GlsRequest();
 			for (LogScan scan : record.getScan()) {
-				final GlsAccessPoint ap = new GlsAccessPoint(scan.getMac(), scan.getRssi());
+				GlsAccessPoint ap = new GlsAccessPoint(scan.getMac(), scan.getRssi());
 				request.addAccessPoint(ap);
 			}
-			final String json = mapper.writeValueAsString(request);
-//			final byte[] postData = json.getBytes("UTF-8");
+			String json = mapper.writeValueAsString(request);
+//			byte[] postData = json.getBytes("UTF-8");
 
 			// submit
-			final String response = doPost(url, json);
+			String response = doPost(url, json);
 			System.out.println("response = " + response);
 			try {
-				final GlsResponse glsResponse = mapper.readValue(response, GlsResponse.class);
-				final GlsLocation glsLocation = glsResponse.getLocation();
+				GlsResponse glsResponse = mapper.readValue(response, GlsResponse.class);
+				GlsLocation glsLocation = glsResponse.getLocation();
 
 				// output to file
-				final String line = String.format(Locale.US, "%s,%s,%f,%f,%f",
+				String line = String.format(Locale.US, "%s,%s,%f,%f,%f",
 						record.getDeviceId(), record.getDateTime(), glsLocation.getLat(), glsLocation.getLng(), glsResponse.getAccuracy());
 				writer.write(line);
 				writer.newLine();
@@ -86,15 +86,15 @@ public final class Submitter {
 	}
 
 	private String doPost(URI url, String data) throws IOException {
-		final CloseableHttpClient client = HttpClients.createDefault();
-		final HttpPost post = new HttpPost(url);
-		final StringEntity input = new StringEntity(data);
+		CloseableHttpClient client = HttpClients.createDefault();
+		HttpPost post = new HttpPost(url);
+		StringEntity input = new StringEntity(data);
 		input.setContentType("application/json");
 		post.setEntity(input);
 
-		final HttpResponse response = client.execute(post);
-		final InputStream is = response.getEntity().getContent();
-		final StringBuilder sb = new StringBuilder();
+		HttpResponse response = client.execute(post);
+		InputStream is = response.getEntity().getContent();
+		StringBuilder sb = new StringBuilder();
 		while (true) {
 			int c = is.read();
 			sb.append((char) c);
