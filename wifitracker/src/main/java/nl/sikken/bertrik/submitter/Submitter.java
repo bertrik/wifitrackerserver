@@ -52,7 +52,7 @@ public final class Submitter {
 
 		// convert and submit
 		final OutputStream os = new FileOutputStream(csvFile);
-		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
+		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 		for (LogRecord record : records) {
 			// create request
 			final GlsRequest request = new GlsRequest();

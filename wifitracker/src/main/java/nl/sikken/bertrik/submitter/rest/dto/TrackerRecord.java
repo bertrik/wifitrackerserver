@@ -26,7 +26,7 @@ public final class TrackerRecord {
 	
 	public TrackerRecord(String deviceId, Date dateTime) {
 		this.deviceId = deviceId;
-		this.dateTime = dateTime;
+		this.dateTime = new Date(dateTime.getTime());
 	}
 
 	public void add(TrackerWifiRecord wifiRecord) {
@@ -38,7 +38,7 @@ public final class TrackerRecord {
 	}
 
 	public Date getDateTime() {
-		return dateTime;
+		return new Date(dateTime.getTime());
 	}
 
 	public List<TrackerWifiRecord> getWifi() {

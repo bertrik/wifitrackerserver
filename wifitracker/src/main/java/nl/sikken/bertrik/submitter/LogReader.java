@@ -2,14 +2,15 @@ package nl.sikken.bertrik.submitter;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.sikken.bertrik.json.LogRecord;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import nl.sikken.bertrik.json.LogRecord;
 
 public final class LogReader {
 
@@ -18,8 +19,7 @@ public final class LogReader {
 	}
 	
 	public List<LogRecord> read(File file) throws IOException {
-		final BufferedReader reader = new BufferedReader(new FileReader(file));
-		try {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
 			final List<LogRecord> list = new ArrayList<LogRecord>();
 			
 			while (true) {
@@ -34,8 +34,6 @@ public final class LogReader {
 				list.add(record);
 			}
 			return list;
-		} finally {
-			reader.close();
 		}
 	}
 
