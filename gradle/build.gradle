@@ -1,5 +1,6 @@
 plugins {
-  id  'com.github.spotbugs' version '2.0.0'
+  id 'com.github.spotbugs' version '2.0.0'
+  id 'com.github.ben-manes.versions' version '0.27.0'
 }
 
 // Here we configure the base version number.
@@ -19,6 +20,7 @@ subprojects {
     apply plugin: "eclipse"
     apply plugin: "pmd"
     apply plugin: "com.github.spotbugs"
+    apply plugin: "com.github.ben-manes.versions"
     
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
