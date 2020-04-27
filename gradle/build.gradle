@@ -1,6 +1,6 @@
 plugins {
-  id 'com.github.spotbugs' version '2.0.0'
-  id 'com.github.ben-manes.versions' version '0.27.0'
+  id 'com.github.spotbugs' version '4.0.7'
+  id 'com.github.ben-manes.versions' version '0.28.0'
 }
 
 // Here we configure the base version number.
@@ -33,16 +33,19 @@ subprojects {
         toolVersion = "5.8.1"
     }
 
-    tasks.withType(com.github.spotbugs.SpotBugsTask) {
-        reports.xml.enabled = false
-        reports.html.enabled = true
+    spotbugsMain {
+        reports {
+            html {
+                enabled = true
+            }
+        }
     }
 
     // Standard libraries added to all projects
     dependencies {
-        testCompile libraries.junit
+        testImplementation libraries.junit
 
-        compile libraries.slf4j
+        implementation libraries.slf4j
     }
 
 }
