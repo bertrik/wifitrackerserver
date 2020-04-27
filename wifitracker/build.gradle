@@ -3,15 +3,15 @@ apply plugin: "application"
 mainClassName = 'nl.sikken.bertrik.submitter.rest.RestServer'
 
 dependencies {
-    compile libraries.slf4jlog4j
+    implementation libraries.slf4jlog4j
 
-    compile libraries.httpclient
-    compile libraries.jackson_databind
+    implementation libraries.httpclient
+    implementation libraries.jackson_databind
     
-    compile libraries.jersey_server
+    implementation libraries.jersey_server
     
     // test dependencies
-    testCompile libraries.jersey_client
+    testImplementation libraries.jersey_client
 }
 
 //Add configuration folder to classpath:
