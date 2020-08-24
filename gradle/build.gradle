@@ -1,6 +1,6 @@
 plugins {
-  id 'com.github.spotbugs' version '4.0.7'
-  id 'com.github.ben-manes.versions' version '0.28.0'
+  id 'com.github.spotbugs' version '4.5.0'
+  id 'com.github.ben-manes.versions' version '0.29.0'
 }
 
 // Here we configure the base version number.
@@ -18,7 +18,6 @@ apply from:'dependencies.gradle'
 subprojects {
     apply plugin: "java"
     apply plugin: "eclipse"
-    apply plugin: "pmd"
     apply plugin: "com.github.spotbugs"
     apply plugin: "com.github.ben-manes.versions"
     
@@ -27,10 +26,6 @@ subprojects {
 
     repositories {
         mavenCentral()
-    }
-
-    pmd {
-        toolVersion = "5.8.1"
     }
 
     spotbugsMain {
